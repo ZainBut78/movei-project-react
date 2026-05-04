@@ -1,38 +1,35 @@
 import React from 'react';
-import { Play, Download, Monitor, Star } from 'lucide-react';
+import { Play, Download, Monitor, Star, Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const MoviePoster = ({ movie }) => {
     return (
-        <div className="flex flex-col items-center lg:items-start gap-4 lg:w-[220px] shrink-0">
+        <div className="flex flex-col gap-2.5 mt-3 w-[160px] md:w-[180px] mx-auto md:mx-0">
 
-            {/* Poster Image */}
-            <div className="w-[180px] lg:w-[220px] rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-white/10">
-                <img
-                    src={movie.large_cover_image}
-                    alt={movie.title}
-                    className="w-full h-full object-cover"
-                    onError={(e) => e.target.src = 'https://via.placeholder.com/220x330?text=No+Poster'}
-                />
-            </div>
+            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                className="w-full flex items-center justify-center gap-2 bg-[#22c55e] hover:bg-[#16a34a] text-black font-bold py-2.5 rounded-xl transition-all shadow-[0_4px_20px_rgba(34,197,94,0.35)] text-sm"
+            >
+                <Play size={14} fill="black" /> Watch Online
+            </motion.button>
 
-            {/* Action Buttons */}
-            <button className="w-full flex items-center justify-center gap-2 bg-[#22c55e] hover:bg-[#16a34a] text-black font-bold py-3 rounded-xl transition-all">
-                <Play size={18} fill="black" />
-                Watch Online
-            </button>
-            <button className="w-full flex items-center justify-center gap-2 bg-[#1e2029] hover:bg-[#2d333f] text-white font-semibold py-3 rounded-xl border border-white/10 transition-all">
-                <Download size={18} />
-                Download
-            </button>
-            <button className="w-full flex items-center justify-center gap-2 bg-[#1e2029] hover:bg-[#2d333f] text-white font-semibold py-3 rounded-xl border border-white/10 transition-all">
-                <Monitor size={18} />
-                Watch Now
-            </button>
+            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                className="w-full flex items-center justify-center gap-2 bg-[#1e263a] hover:bg-[#263045] text-white font-semibold py-2.5 rounded-xl border border-white/10 hover:border-[#a3c9ff]/40 transition-all text-sm"
+            >
+                <Download size={14} /> Download
+            </motion.button>
+
+            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                className="w-full flex items-center justify-center gap-2 bg-[#1e263a] hover:bg-[#263045] text-white font-semibold py-2.5 rounded-xl border border-white/10 hover:border-[#a3c9ff]/40 transition-all text-sm"
+            >
+                <Monitor size={14} /> Watch Now
+            </motion.button>
 
             {/* Genre Tags */}
-            <div className="flex flex-wrap gap-2 justify-center lg:justify-start mt-2">
+            <div className="flex flex-wrap gap-1.5 mt-1">
                 {movie.genres?.map(g => (
-                    <span key={g} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    <span key={g}
+                        className="px-2 py-0.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded text-[10px] font-bold text-gray-300 uppercase tracking-wider cursor-pointer transition-all"
+                    >
                         {g}
                     </span>
                 ))}
@@ -40,16 +37,16 @@ const MoviePoster = ({ movie }) => {
 
             {/* IMDb Rating */}
             {movie.rating > 0 && (
-                <div className="w-full bg-[#1e2029] border border-white/10 rounded-xl p-4 text-center">
-                    <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">IMDb Rating</p>
-                    <div className="flex items-center justify-center gap-1">
-                        <Star size={18} className="text-[#ffb800]" fill="#ffb800" />
-                        <span className="text-2xl font-bold text-white">{movie.rating}</span>
-                        <span className="text-gray-400 text-sm">/10</span>
+                <div className="bg-[#1e263a] border border-white/10 rounded-xl p-3 mt-1">
+                    <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-1">IMDB Rating</p>
+                    <div className="flex items-center gap-1.5">
+                        <Star size={14} className="text-[#ffb800]" fill="#ffb800" />
+                        <span className="text-xl font-black text-white">{movie.rating}</span>
+                        <span className="text-gray-500 text-xs">/10</span>
                     </div>
-                    {movie.like_count > 0 && (
-                        <p className="text-xs text-gray-500 mt-1">{movie.like_count.toLocaleString()} likes</p>
-                    )}
+                    <p className="text-[10px] text-gray-600 mt-0.5">
+                        {movie.like_count?.toLocaleString()} user reviews
+                    </p>
                 </div>
             )}
         </div>

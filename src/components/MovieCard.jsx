@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { Play as PlayIcon, Star as StarIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const MovieCard = ({ movie }) => {
+    const navigate = useNavigate(); // ✅ Yeh missing tha!
+
     const {
         title = "Unknown Movie",
         year = "N/A",
@@ -16,6 +19,7 @@ const MovieCard = ({ movie }) => {
 
     return (
         <motion.div
+            onClick={() => navigate(`/movie/${movie.id}`)}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -8 }}
@@ -29,6 +33,8 @@ const MovieCard = ({ movie }) => {
                     onError={(e) => { e.target.src = 'https://via.placeholder.com/210x315?text=No+Poster' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a1c23] via-transparent to-transparent opacity-90 transition-opacity group-hover:opacity-100" />
+
+                {/* Quality Badge */}
                 <motion.div
                     initial={{ opacity: 0, x: 10 }}
                     whileHover={{ opacity: 1, x: 0 }}
@@ -36,6 +42,8 @@ const MovieCard = ({ movie }) => {
                 >
                     {quality}
                 </motion.div>
+
+                {/* Play Button */}
                 <div className="absolute inset-0 flex items-center justify-center transition-all duration-500 opacity-0 group-hover:opacity-100">
                     <motion.div
                         initial={{ scale: 0.8 }}
@@ -47,6 +55,7 @@ const MovieCard = ({ movie }) => {
                 </div>
             </div>
 
+            {/* Info */}
             <div className="p-4 space-y-2 relative z-20">
                 <div className="flex justify-between items-start gap-1">
                     <h3 className="text-white font-bold text-sm leading-tight group-hover:text-[#a3c9ff] transition-colors line-clamp-1">
@@ -57,11 +66,13 @@ const MovieCard = ({ movie }) => {
                         <span className="text-xs font-bold">{rating}</span>
                     </div>
                 </div>
+
                 <div className="flex items-center gap-2 text-gray-400 text-[10px] font-medium">
                     <span>{year}</span>
                     <span className="text-white/10">•</span>
                     <span className="line-clamp-1">{category}</span>
                 </div>
+
                 <div className="pt-1">
                     <div className="h-[2px] w-full bg-white/5 rounded-full overflow-hidden">
                         <motion.div
